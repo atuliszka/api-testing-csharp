@@ -10,18 +10,19 @@ namespace ApiTesting.CSharp.Specs
     [Binding]
     public class PostsSteps
     {
-        private IRestResponse<List<Post>> response;
+        private IRestResponse<List<Post>> Response;
+        private readonly PostsObject PostsObject = new PostsObject();
 
-        [When(@"I request posts")]
+        [When(@"I request all posts")]
         public void WhenIRequestPosts()
         {
-            this.response = PostsClient.Get();
+            Response = PostsObject.Get();
         }
         
         [Then(@"the response should contain all posts")]
         public void ThenTheResponseShouldContainAllPosts()
         {
-            Assert.IsTrue(response.Data.Count.Equals(100));
+            Assert.IsTrue(Response.Data.Count.Equals(100));
         }
     }
 }

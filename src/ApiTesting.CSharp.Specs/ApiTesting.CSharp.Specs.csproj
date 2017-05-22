@@ -73,7 +73,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Default.srprofile">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -91,7 +93,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\ApiTesting.CSharp.Framework\ApiTesting.CSharp.Framework.csproj">
+    <ProjectReference Include="..\ApiTesting.CSharp.Framework\ApiTesting.CSharp.Framework.csproj">
       <Project>{0aac4f45-b24c-4372-9b48-f166d41792ae}</Project>
       <Name>ApiTesting.CSharp.Framework</Name>
     </ProjectReference>

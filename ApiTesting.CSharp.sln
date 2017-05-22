@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.26430.6
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApiTesting.CSharp.Specs", "src\ApiTesting.CSharp.Specs\ApiTesting.CSharp.Specs.csproj", "{497A5FA7-3C1B-453D-929C-E752AD7990DC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApiTesting.CSharp.Framework", "ApiTesting.CSharp.Framework\ApiTesting.CSharp.Framework.csproj", "{0AAC4F45-B24C-4372-9B48-F166D41792AE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApiTesting.CSharp.Framework", "src\ApiTesting.CSharp.Framework\ApiTesting.CSharp.Framework.csproj", "{0AAC4F45-B24C-4372-9B48-F166D41792AE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

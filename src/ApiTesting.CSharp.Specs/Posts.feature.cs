@@ -31,8 +31,8 @@ namespace ApiTesting.CSharp.Specs
         public virtual void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Posts", "\t\tIn order to communicate with other users\r\n\t\tAs a service user\r\n\t\tI want to be a" +
-                    "ble to receive and send posts", ProgrammingLanguage.CSharp, ((string[])(null)));
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Posts", "\t\tIn order to communicate with others\r\n\t\tAs a service user\r\n\t\tI want to be able t" +
+                    "o receive and send posts", ProgrammingLanguage.CSharp, ((string[])(null)));
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -65,14 +65,14 @@ namespace ApiTesting.CSharp.Specs
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Get posts")]
-        public virtual void GetPosts()
+        [NUnit.Framework.DescriptionAttribute("Request all posts")]
+        public virtual void RequestAllPosts()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get posts", ((string[])(null)));
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Request all posts", ((string[])(null)));
 #line 6
 this.ScenarioSetup(scenarioInfo);
 #line 7
-  testRunner.When("I request posts", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+  testRunner.When("I request all posts", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 8
   testRunner.Then("the response should contain all posts", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
