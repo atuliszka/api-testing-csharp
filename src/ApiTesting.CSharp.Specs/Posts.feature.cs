@@ -65,16 +65,43 @@ namespace ApiTesting.CSharp.Specs
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Request all posts")]
-        public virtual void RequestAllPosts()
+        [NUnit.Framework.DescriptionAttribute("Requesting all posts")]
+        public virtual void RequestingAllPosts()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Request all posts", ((string[])(null)));
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Requesting all posts", ((string[])(null)));
 #line 6
 this.ScenarioSetup(scenarioInfo);
 #line 7
-  testRunner.When("I request all posts", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+  testRunner.Given("a user is using the posts resource", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 8
-  testRunner.Then("the response should contain all posts", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+  testRunner.When("he requests all posts", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 9
+  testRunner.Then("the response should contain 100 posts", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 10
+  testRunner.And("all posts should contain required properties", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Requesting a specific post")]
+        public virtual void RequestingASpecificPost()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Requesting a specific post", ((string[])(null)));
+#line 12
+this.ScenarioSetup(scenarioInfo);
+#line 13
+  testRunner.Given("a user is using the posts resource", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 14
+  testRunner.When("he requests any post between 1 and 100", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 15
+  testRunner.Then("the response should contain corresponding post Id", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 16
+  testRunner.And("the \'UserId\' property should be present", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 17
+  testRunner.And("the \'Title\' property should be present", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 18
+  testRunner.And("the body of post should be between 1 and 200 characters", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
         }

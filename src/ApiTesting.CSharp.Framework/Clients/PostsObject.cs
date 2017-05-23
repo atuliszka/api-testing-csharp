@@ -6,8 +6,11 @@ using RestSharp;
 
 namespace ApiTesting.CSharp.Framework.Clients
 {
-    public class PostsObject : RestObjectBase
+    public class PostsObject : ResourceObject
     {
+        private const string GetAllPostsPath = "posts";
+        private const string GetPostPath = "posts/{id}";
+
         private new static readonly RestClient RestClient = new RestClient(GlobalConfiguration.Url);
         private new static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
@@ -15,10 +18,19 @@ namespace ApiTesting.CSharp.Framework.Clients
         {
         }
 
-        public IRestResponse<List<Post>> Get()
+        public IRestResponse<List<Post>> GetAllPosts()
         {
-            RestRequest request = new RestRequest("posts", Method.GET);
+            RestRequest request = new RestRequest(GetAllPostsPath, Method.GET);
             IRestResponse<List<Post>> response = Execute<List<Post>>(request);
+
+            return response;
+        }
+
+        public IRestResponse<Post> GetPost(string postId)
+        {
+            RestRequest request = new RestRequest(GetPostPath, Method.GET);
+            request.AddUrlSegment("id", postId);
+            IRestResponse<Post> response = Execute<Post>(request);
 
             return response;
         }

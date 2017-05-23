@@ -6,12 +6,12 @@ using RestSharp;
 
 namespace ApiTesting.CSharp.Framework.BaseObjects
 {
-    public abstract class RestObjectBase
+    public abstract class ResourceObject
     {
         protected readonly IRestClient RestClient;
         protected readonly ILogger Logger;
 
-        protected RestObjectBase(IRestClient restClient, ILogger logger)
+        protected ResourceObject(IRestClient restClient, ILogger logger)
         {
             RestClient = restClient;
             Logger = logger;
