@@ -31,8 +31,8 @@ namespace ApiTesting.CSharp.Specs
         public virtual void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Posts", "\t\tIn order to communicate with others\r\n\t\tAs a service user\r\n\t\tI want to be able t" +
-                    "o receive and send posts", ProgrammingLanguage.CSharp, ((string[])(null)));
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Posts", "\t\tIn order to communicate with others\r\n\t\tAs a user of JSONPlaceholder service\r\n\t\t" +
+                    "I want to be able to receive and send posts", ProgrammingLanguage.CSharp, ((string[])(null)));
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -97,11 +97,58 @@ this.ScenarioSetup(scenarioInfo);
 #line 15
   testRunner.Then("the response should contain corresponding post Id", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 16
-  testRunner.And("the \'UserId\' property should be present", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+  testRunner.And("the \'UserId\' property should be present in post", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 17
-  testRunner.And("the \'Title\' property should be present", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+  testRunner.And("the \'Title\' property should be present in post", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 18
-  testRunner.And("the body of post should be between 1 and 200 characters", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+  testRunner.And("the body of post should be between 1 and 250 characters", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Requesting posts of a specific user")]
+        public virtual void RequestingPostsOfASpecificUser()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Requesting posts of a specific user", ((string[])(null)));
+#line 20
+this.ScenarioSetup(scenarioInfo);
+#line 21
+  testRunner.Given("a user is using the posts resource", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 22
+  testRunner.When("he requests posts of a user with Id between 1 and 10", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 23
+  testRunner.Then("the response should contain 10 posts", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 24
+  testRunner.And("all posts should contain required properties", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Sending a post")]
+        public virtual void SendingAPost()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Sending a post", ((string[])(null)));
+#line 26
+this.ScenarioSetup(scenarioInfo);
+#line 27
+  testRunner.Given("a user is using the posts resource", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 28
+  testRunner.And("his userId is between 1 and 100", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            TechTalk.SpecFlow.Table table1 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Title",
+                        "Body"});
+            table1.AddRow(new string[] {
+                        "An interesting post title",
+                        "Completely reasonable argument in the body"});
+#line 29
+  testRunner.When("he sends a post with following title and body:", ((string)(null)), table1, "When ");
+#line 32
+  testRunner.Then("the response contains post Id \'101\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 33
+  testRunner.And("correct title, body and userId", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
         }

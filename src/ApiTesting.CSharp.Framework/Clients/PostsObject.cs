@@ -8,8 +8,8 @@ namespace ApiTesting.CSharp.Framework.Clients
 {
     public class PostsObject : ResourceObject
     {
-        private const string GetAllPostsPath = "posts";
-        private const string GetPostPath = "posts/{id}";
+        private const string PostsRoute = "posts";
+        private const string PostByIdRoute = "posts/{id}";
 
         private new static readonly RestClient RestClient = new RestClient(GlobalConfiguration.Url);
         private new static readonly Logger Logger = LogManager.GetCurrentClassLogger();
@@ -18,26 +18,38 @@ namespace ApiTesting.CSharp.Framework.Clients
         {
         }
 
-        public IRestResponse<List<Post>> GetAllPosts()
+        public IRestResponse<List<Post>> GetPosts()
         {
-            RestRequest request = new RestRequest(GetAllPostsPath, Method.GET);
-            IRestResponse<List<Post>> response = Execute<List<Post>>(request);
+            RestRequest request = new RestRequest(PostsRoute, Method.GET);
 
-            return response;
+            return Execute<List<Post>>(request);
+        }
+
+        public IRestResponse<List<Post>> GetPosts(string userId)
+        {
+            RestRequest request = new RestRequest(PostsRoute, Method.GET);
+            request.AddParameter("userId", userId);
+
+            return Execute<List<Post>>(request);
         }
 
         public IRestResponse<Post> GetPost(string postId)
         {
-            RestRequest request = new RestRequest(GetPostPath, Method.GET);
+            RestRequest request = new RestRequest(PostByIdRoute, Method.GET);
             request.AddUrlSegment("id", postId);
-            IRestResponse<Post> response = Execute<Post>(request);
 
-            return response;
+            return Execute<Post>(request);
         }
 
-        public static void Post()
+        public IRestResponse<Post> SendPost(int userId, string title, string body)
         {
+            RestRequest request = new RestRequest(PostsRoute, Method.POST);
+            request.AddParameter("userId", userId);
+            request.AddParameter("title", title);
+            request.AddParameter("body", body);
 
+            return Execute<Post>(request);
         }
+
     }
 }

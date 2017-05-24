@@ -54,6 +54,7 @@
     <Compile Include="GlobalConfiguration.cs" />
     <Compile Include="Clients\PostsObject.cs" />
     <Compile Include="Models\Post.cs" />
+    <Compile Include="Models\UserContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="BaseObjects\ResourceObject.cs" />
   </ItemGroup>
