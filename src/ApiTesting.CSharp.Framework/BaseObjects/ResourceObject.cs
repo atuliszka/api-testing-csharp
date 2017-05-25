@@ -62,7 +62,7 @@ namespace ApiTesting.CSharp.Framework.BaseObjects
 
         private void LogRequest(IRestRequest request, IRestResponse response, long durationInMilliseconds)
         {
-            Logger.Trace(() => $"Request completed in {durationInMilliseconds} ms, " +
+            Logger.Debug(() => $"Request completed in {durationInMilliseconds} ms, " +
                                $"Request: {ConvertRestRequestToString(request)}, " +
                                $"Response: {ConvertRestResponseToString(response)}");
         }

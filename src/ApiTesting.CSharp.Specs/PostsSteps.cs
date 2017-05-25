@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reflection;
 using ApiTesting.CSharp.Framework.Clients;
 using ApiTesting.CSharp.Framework.Models;
 using RestSharp;
@@ -73,7 +74,7 @@ namespace ApiTesting.CSharp.Specs
         public void ThenTheUserIdPropertyShouldBePresent(string propertyName)
         {
             var response = ScenarioContext.Current.Get<IRestResponse<Post>>("Response");
-            Assert.IsNotEmpty(GetPropValue(response.Data, propertyName).ToString());
+            Assert.IsNotEmpty(GetPropertyValue(response.Data, propertyName).ToString());
         }
 
         [Then(@"the body of post should be between (.*) and (.*) characters")]
@@ -86,41 +87,77 @@ namespace ApiTesting.CSharp.Specs
         [When(@"he requests posts of a user with Id between (.*) and (.*)")]
         public void WhenHeRequestsPostsOfAUserWithIdBetweenAnd(int minUserId, int maxUserId)
         {
-            UserContext.UserId = GetRandomIntBetween(minUserId, maxUserId);
-            ScenarioContext.Current.Add("Response", PostsObject.GetPosts(UserContext.UserId.ToString()));
+            UserContext.Post.UserId = GetRandomIntBetween(minUserId, maxUserId);
+            ScenarioContext.Current.Add("Response", PostsObject.GetPosts(UserContext.Post.UserId.ToString()));
         }
 
         [Given(@"his userId is between (.*) and (.*)")]
         public void GivenHisUserIdIsBetweenAnd(int minUserId, int maxUserId)
         {
-            UserContext.UserId = GetRandomIntBetween(minUserId, maxUserId);
+            UserContext.Post.UserId = GetRandomIntBetween(minUserId, maxUserId);
         }
 
         [When(@"he sends a post with following title and body:")]
         public void WhenHeSendsAPostWithFollowingTitleAndBody(Table table)
         {
             UserContext.Post = table.CreateInstance<Post>();
-            ScenarioContext.Current.Add("Response", PostsObject.SendPost(
-                UserContext.UserId, UserContext.Post.Title, UserContext.Post.Body));
+            ScenarioContext.Current.Add("Response", PostsObject.SendPost(UserContext.Post));
         }
 
-        [Then(@"the response contains post Id '(.*)'")]
+        [Then(@"response contains post Id '(.*)'")]
         public void ThenTheResponseContainsPostId(int postId)
         {
             var response = ScenarioContext.Current.Get<IRestResponse<Post>>("Response");
             Assert.AreEqual(response.Data.Id, postId);
         }
 
-        [Then(@"correct title, body and userId")]
+        [Then(@"response contains correct title, body and userId")]
         public void ThenCorrectAndUserId()
         {
             var response = ScenarioContext.Current.Get<IRestResponse<Post>>("Response");
             Assert.Multiple(() =>
                 {
-                    Assert.AreEqual(response.Data.UserId, UserContext.UserId);
+                    Assert.AreEqual(response.Data.UserId, UserContext.Post.UserId);
                     Assert.AreEqual(response.Data.Title, UserContext.Post.Title);
                     Assert.AreEqual(response.Data.Body, UserContext.Post.Body);
                 });
+        }
+
+        [When(@"he sends a new '(.*)' with value '(.*)' for any post between (.*) and (.*)")]
+        public void WhenHeSendsANewForAnyPostBetweenAnd(
+            string propertyName, string propertyValue, int minPostId, int maxPostId)
+        {
+            UserContext.Post.Id = GetRandomIntBetween(minPostId, maxPostId);
+            TrySetProperty(UserContext.Post, propertyName, propertyValue);
+            ScenarioContext.Current.Add("Response", PostsObject.UpdatePost(
+                UserContext.Post.Id.ToString(), propertyName, "newProperty"));
+        }
+
+        [Then(@"response contains new '(.*)'")]
+        public void ThenTheResponseContainsNew(string propertyName)
+        {
+            var response = ScenarioContext.Current.Get<IRestResponse<Post>>("Response");
+            Assert.AreEqual(GetPropertyValue(response, propertyName), GetPropertyValue(UserContext.Post, propertyName));
+        }
+
+        [When(@"he replaces a post between (.*) and (.*) with values:")]
+        public void WhenHeReplacesAPostBetweenAndWithValues(int minPostId, int maxPostId, Table table)
+        {
+            UserContext.Post = table.CreateInstance<Post>();
+            UserContext.Post.Id = GetRandomIntBetween(minPostId, maxPostId);
+            ScenarioContext.Current.Add("Response", PostsObject.ReplacePost(UserContext.Post));
+        }
+
+        [When(@"he deletes a post between (.*) and (.*)")]
+        public void WhenHeDeletesAPostBetweenAnd(int minPostId, int maxPostId)
+        {
+            ScenarioContext.Current.Pending();
+        }
+
+        [Then(@"response has (.*) status code")]
+        public void ThenTheResponseHasStatusCode(int expectedStatusCode)
+        {
+            ScenarioContext.Current.Pending();
         }
 
         private static int GetRandomIntBetween(int min, int max)
@@ -129,10 +166,16 @@ namespace ApiTesting.CSharp.Specs
             return random.Next(min, max);
         }
 
-        private static object GetPropValue(object src, string propName)
+        private static object GetPropertyValue(object src, string propName)
         {
             return src.GetType().GetProperty(propName)?.GetValue(src, null);
         }
 
+        private static void TrySetProperty(object obj, string property, object value)
+        {
+            var prop = obj.GetType().GetProperty(property, BindingFlags.Public | BindingFlags.Instance);
+            if (prop != null && prop.CanWrite)
+                prop.SetValue(obj, value, null);
+        }
     }
 }

@@ -41,15 +41,34 @@ namespace ApiTesting.CSharp.Framework.Clients
             return Execute<Post>(request);
         }
 
-        public IRestResponse<Post> SendPost(int userId, string title, string body)
+        public IRestResponse<Post> SendPost(Post post)
         {
             RestRequest request = new RestRequest(PostsRoute, Method.POST);
-            request.AddParameter("userId", userId);
-            request.AddParameter("title", title);
-            request.AddParameter("body", body);
+            request.AddParameter("userId", post.UserId);
+            request.AddParameter("title", post.Title);
+            request.AddParameter("body", post.Body);
 
             return Execute<Post>(request);
         }
 
+        public IRestResponse<Post> UpdatePost(string postId, string propertyName, string propertyValue)
+        {
+            RestRequest request = new RestRequest(PostByIdRoute, Method.PATCH);
+            request.AddUrlSegment("id", postId);
+            request.AddParameter(propertyName, propertyValue);
+
+            return Execute<Post>(request);
+        }
+
+        public IRestResponse<Post> ReplacePost(Post post)
+        {
+            RestRequest request = new RestRequest(PostByIdRoute, Method.PUT);
+            request.AddUrlSegment("id", post.Id.ToString());
+            request.AddParameter("userId", post.UserId);
+            request.AddParameter("title", post.Title);
+            request.AddParameter("body", post.Body);
+
+            return Execute<Post>(request);
+        }
     }
 }

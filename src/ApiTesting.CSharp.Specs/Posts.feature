@@ -29,5 +29,29 @@ Scenario: Sending a post
 		When he sends a post with following title and body:
 | Title                     | Body                                       |
 | An interesting post title | Completely reasonable argument in the body |
-		Then the response contains post Id '101'
-		And correct title, body and userId
+		Then response contains post Id '101'
+		And response contains correct title, body and userId
+
+Scenario: Updating a post body
+		Given a user is using the posts resource
+		When he sends a new 'body' with value 'new body' for any post between 1 and 100
+		Then response contains new 'body'
+		And response has 200 status code
+
+Scenario: Updating a post title
+		Given a user is using the posts resource
+		When he sends a new 'title' with value 'new title' for any post between 1 and 100
+		Then response contains new 'title'
+		And response has 200 status code
+
+Scenario: Replacing a post
+		Given a user is using the posts resource
+		When he replaces a post between 1 and 100 with values:
+| UserId | Title                     | Body                                       |
+| 15     | An interesting post title | Completely reasonable argument in the body |
+		Then response contains correct title, body and userId
+
+Scenario: Deleting a post
+		Given a user is using the posts resource
+		When he deletes a post between 1 and 100
+		Then response has 200 status code
