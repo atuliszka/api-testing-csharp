@@ -10,7 +10,7 @@
 // ------------------------------------------------------------------------------
 #region Designer generated code
 #pragma warning disable
-namespace ApiTesting.CSharp.Specs
+namespace ApiTesting.CSharp.Specs.Features
 {
     using TechTalk.SpecFlow;
     

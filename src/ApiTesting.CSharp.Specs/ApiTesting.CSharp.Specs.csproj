@@ -64,9 +64,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="PostsSteps.cs" />
+    <Compile Include="Steps\PostsSteps.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Posts.feature.cs">
+    <Compile Include="Features\Posts.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Posts.feature</DependentUpon>
@@ -79,9 +79,11 @@
     <None Include="Default.srprofile">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="runtests.cmd" />
-    <None Include="Posts.feature">
+    <None Include="Features\Posts.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>Posts.feature.cs</LastGenOutput>
     </None>

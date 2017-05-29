@@ -1,14 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Reflection;
 using ApiTesting.CSharp.Framework.Clients;
 using ApiTesting.CSharp.Framework.Models;
+using NUnit.Framework;
 using RestSharp;
 using TechTalk.SpecFlow;
-using NUnit.Framework;
 using TechTalk.SpecFlow.Assist;
 
-namespace ApiTesting.CSharp.Specs
+namespace ApiTesting.CSharp.Specs.Steps
 {
     [Binding]
     public class PostsSteps
@@ -151,13 +152,15 @@ namespace ApiTesting.CSharp.Specs
         [When(@"he deletes a post between (.*) and (.*)")]
         public void WhenHeDeletesAPostBetweenAnd(int minPostId, int maxPostId)
         {
-            ScenarioContext.Current.Pending();
+            UserContext.Post.Id = GetRandomIntBetween(minPostId, maxPostId);
+            ScenarioContext.Current.Add("Response", PostsObject.DeletePost(UserContext.Post));
         }
 
         [Then(@"response has (.*) status code")]
         public void ThenTheResponseHasStatusCode(int expectedStatusCode)
         {
-            ScenarioContext.Current.Pending();
+            var response = ScenarioContext.Current.Get<IRestResponse>("Response");
+            Assert.AreEqual(response.StatusCode, (HttpStatusCode)expectedStatusCode);
         }
 
         private static int GetRandomIntBetween(int min, int max)

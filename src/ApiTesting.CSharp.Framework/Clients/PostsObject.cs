@@ -70,5 +70,13 @@ namespace ApiTesting.CSharp.Framework.Clients
 
             return Execute<Post>(request);
         }
+
+        public IRestResponse DeletePost(Post post)
+        {
+            RestRequest request = new RestRequest(PostByIdRoute, Method.DELETE);
+            request.AddUrlSegment("id", post.Id.ToString());
+
+            return Execute(request);
+        }
     }
 }
